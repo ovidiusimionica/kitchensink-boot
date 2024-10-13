@@ -1,0 +1,19 @@
+services:
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - mongo-data:/data/db
+  springboot-app:
+    build: .
+    container_name: springboot-app
+    depends_on:
+      - mongo
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/your_database?authSource=admin
+    ports:
+      - "8080:8080"  # Bind Spring Boot app port to host
+
+volumes:
+  mongo-data:
