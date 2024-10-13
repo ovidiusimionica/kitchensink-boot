@@ -13,6 +13,7 @@ COPY gradle.properties .
 
 # Copy the rest of the project files
 
+COPY config config
 COPY app app
 COPY member-registration member-registration
 
