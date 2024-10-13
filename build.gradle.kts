@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version libs.versions.springDep.get()
     id("test-report-aggregation")
     id("pmd")
+    id("checkstyle")
 }
 
 java {
@@ -13,6 +14,7 @@ java {
 }
 
 
+val checkstyleVersion: String = libs.versions.checkStyle.get()
 allprojects {
     group = "$group"
     version = "$version"
@@ -20,9 +22,16 @@ allprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
     }
+
+    apply(plugin = "checkstyle")
+    apply(plugin = "pmd")
+    checkstyle {
+        checkstyle.toolVersion = checkstyleVersion
+    }
+
 }
 
-// todo: pmd and checkstyle
+// todo: pmd
 //subprojects {
 //    apply(plugin = "pmd")
 //    pmd {

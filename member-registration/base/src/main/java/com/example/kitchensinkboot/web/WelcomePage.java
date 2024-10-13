@@ -9,8 +9,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/")
 public class WelcomePage {
 
-    @GetMapping
-    public RedirectView redirect() {
-        return new RedirectView("/index.xhtml");
-    }
+  @GetMapping
+  public RedirectView redirect() {
+    return new RedirectView("/index.xhtml");
+  }
 }

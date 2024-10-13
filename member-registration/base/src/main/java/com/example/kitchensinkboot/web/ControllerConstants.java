@@ -1,8 +1,9 @@
 package com.example.kitchensinkboot.web;
 
 public class ControllerConstants {
-    public static final String BASE_URL = "/rest";
+  public static final String BASE_URL = "/rest";
 
-    private ControllerConstants() {}
+  private ControllerConstants() {
+  }
 
 }

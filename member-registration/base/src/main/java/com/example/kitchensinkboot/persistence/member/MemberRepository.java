@@ -1,16 +1,14 @@
 package com.example.kitchensinkboot.persistence.member;
 
-import java.util.List;
-
-import org.springframework.dao.DuplicateKeyException;
-
 import com.example.kitchensinkboot.model.member.Member;
+import java.util.List;
+import org.springframework.dao.DuplicateKeyException;
 
 public interface MemberRepository {
 
-    Member insert(Member member) throws DuplicateKeyException;
+  Member insert(Member member) throws DuplicateKeyException;
 
-    List<Member> getAll();
+  List<Member> getAll();
 
-    Member findById(String id);
+  Member findById(String id);
 }

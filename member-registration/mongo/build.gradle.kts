@@ -10,7 +10,7 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation(project(":member-registration:base"))
+    compileOnly(project(":member-registration:base"))
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
