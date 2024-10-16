@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@SuppressWarnings("ClassEscapesDefinedScope")
 @RestController
 @RequestMapping(BASE_URL + "/members")
 public class MemberRegistrationController {
@@ -27,14 +28,14 @@ public class MemberRegistrationController {
   private MemberRegistrationService memberRegistrationService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<Member>> listAllMembers() {
-    return ResponseEntity.ok(memberRegistrationService.getAll());
+  public ResponseEntity<List<MemberDto>> listAllMembers() {
+    return ResponseEntity.ok(memberRegistrationService.getAll().stream().map(this::toDto).toList());
   }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> createMember(@RequestBody Member member) {
+  public ResponseEntity<?> createMember(@RequestBody MemberDto member) {
     try {
-      memberRegistrationService.register(member);
+      memberRegistrationService.register(member.toModel());
       return ResponseEntity.ok().build();
     } catch (DuplicateMemberException e) {
       Map<String, String> responseObj = new HashMap<>();
@@ -49,6 +50,22 @@ public class MemberRegistrationController {
     if (member == null) {
       return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.ok(member);
+    return ResponseEntity.ok(toDto(member));
+  }
+
+  private MemberDto toDto(Member member) {
+    return new MemberDto(
+        member.getId(),
+        member.getName(),
+        member.getEmail(),
+        member.getPhoneNumber()
+    );
+  }
+
+  private record MemberDto(String id, String name, String email, String phoneNumber) {
+
+    public Member toModel() {
+      return new Member(name, email, phoneNumber);
+    }
   }
 }
